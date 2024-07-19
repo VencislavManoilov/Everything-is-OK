@@ -7,7 +7,7 @@ create table users (
     guest boolean not null,
     username varchar(100) unique not null,
     email varchar(100),
-    password varchar(32)
+    password varchar(100)
 );
  
 create table concerns (

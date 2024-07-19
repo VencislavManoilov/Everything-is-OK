@@ -88,11 +88,17 @@ app.get("/user", isAuthenticated, (req, res) => {
     }
 })
 
-const registerGuest = require("./routes/register-guest");
+const registerRoute = require("./routes/register");
+app.use("/register", (req, res, next) => {
+    req.db = db;
+    next();
+}, registerRoute);
+
+const registerGuestRoute = require("./routes/register-guest");
 app.use("/register-guest", (req, res, next) => {
     req.db = db;
     next();
-}, registerGuest)
+}, registerGuestRoute);
 
 const loginRoute = require("./routes/login");
 app.use("/login", (req, res, next) => {
