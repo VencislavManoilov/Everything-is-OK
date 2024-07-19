@@ -4,6 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
+const session = require("express-session");
+const mysql = require("mysql2");
+const MySQLStore = require("express-mysql-session")(session);
 
 const OpenAI = require("openai");
 const openai = new OpenAI({
@@ -14,6 +17,43 @@ const PORT = 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configure MySQL connection
+const db = mysql.createConnection({
+    host: process.env.MYSQL_HOST || 'localhost',
+    user: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB || 'everything_is_ok',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+// Connect to MySQL
+db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL:', err);
+        return;
+    }
+    console.log('Connected to MySQL');
+});
+
+// Session store setup
+const sessionStore = new MySQLStore({}, db.promise());
+
+// Session middleware setup
+app.use(session({
+    key: 'session_cookie_name',
+    secret: 'your_secret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        secure: false,
+        httpOnly: true
+    }
+}));
 
 const corsOptions = {
     origin: ['http://localhost:3000', 'http://frontend:3000', 'http://127.0.0.1:3000', process.env.FRONTEND_URL],
