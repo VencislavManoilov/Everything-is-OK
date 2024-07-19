@@ -10,11 +10,13 @@
   "author": "Vencislav Manoilov",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.0",
+    "express-validator": "^7.1.0",
     "fs": "^0.0.1-security",
     "mysql2": "^3.10.3",
     "openai": "^4.52.7",

@@ -66,6 +66,34 @@ app.get("/", (req, res) => {
     res.status(200).json({ message: "Welcome to Everything is OK API", version: "1.0.0" });
 })
 
+const isAuthenticated = require("./middleware/isAuthenticated");
+app.get("/user", isAuthenticated, (req, res) => {
+    try {
+        const query = "SELECT * FROM users WHERE id = ?";
+        db.query(query, [req.session.userId], (err, results) => {
+            if(err) {
+                console.error("Error:", err);
+                return res.status(500).json({ error: "Internal server error" });
+            }
+
+            let userWithoutPassword = results[0];
+
+            delete userWithoutPassword.password;
+
+            res.status(200).json({ user: userWithoutPassword });
+        });
+    } catch(err) {
+        console.error("Error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+const registerGuest = require("./routes/register-guest");
+app.use("/register-guest", (req, res, next) => {
+    req.db = db;
+    next();
+}, registerGuest)
+
 app.post("/helped", (req, res) => {
     let data = JSON.parse(fs.readFileSync("./data.json", { encoding: 'utf8' }));
 

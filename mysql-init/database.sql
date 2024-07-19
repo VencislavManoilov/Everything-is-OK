@@ -5,7 +5,7 @@ use everything_is_ok;
 create table users (
 	id int auto_increment primary key,
     guest bool not null,
-    username varchar(100) unique,
+    username varchar(100) unique not null,
     email varchar(100),
     password varchar(32)
 );
