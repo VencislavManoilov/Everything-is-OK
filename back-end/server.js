@@ -21,6 +21,20 @@ app.get("/", (req, res) => {
     res.status(200).json({ message: "Welcome to Everything is OK API", version: "1.0.0" });
 })
 
+app.post("/helped", (req, res) => {
+    let data = JSON.parse(fs.readFileSync("./data.json", { encoding: 'utf8' }));
+
+    data.helped++;
+
+    try {
+        fs.writeFileSync("./data.json", JSON.stringify(data), { encoding: 'utf8' });
+        return res.status(200).json({ helped: data.helped });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+})
+
 app.get("*", (req, res) => {
     res.status(404).json({ message: "Not Found" });
 })
