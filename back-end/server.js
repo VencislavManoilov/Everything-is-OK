@@ -76,11 +76,18 @@ app.get("/user", isAuthenticated, (req, res) => {
                 return res.status(500).json({ error: "Internal server error" });
             }
 
-            let userWithoutPassword = results[0];
+            if(results.length === 0) {
+                return res.status(404).json({ error: "User not found" });
+            }
 
-            delete userWithoutPassword.password;
+            if(results[0].password) {
+                return res.status(200).json({ user: results[0] });
+            } else {
+                let userWithoutPassword = results[0];
+                delete userWithoutPassword.password;
 
-            res.status(200).json({ user: userWithoutPassword });
+                return res.status(200).json({ user: userWithoutPassword });
+            }
         });
     } catch(err) {
         console.error("Error:", err);
@@ -101,6 +108,7 @@ app.use("/register-guest", (req, res, next) => {
 }, registerGuestRoute);
 
 const loginRoute = require("./routes/login");
+const { isUndefined } = require("util");
 app.use("/login", (req, res, next) => {
     req.db = db;
     next();
