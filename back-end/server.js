@@ -108,11 +108,16 @@ app.use("/register-guest", (req, res, next) => {
 }, registerGuestRoute);
 
 const loginRoute = require("./routes/login");
-const { isUndefined } = require("util");
 app.use("/login", (req, res, next) => {
     req.db = db;
     next();
 }, loginRoute);
+
+const logoutRoute = require("./routes/logout");
+app.use("/logout", (req, res, next) => {
+    req.db = db;
+    next();
+}, logoutRoute);
 
 app.post("/helped", (req, res) => {
     let data = JSON.parse(fs.readFileSync("./data.json", { encoding: 'utf8' }));

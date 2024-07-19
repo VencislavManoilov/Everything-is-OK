@@ -27,8 +27,8 @@ route.post(
         if(req.session.guest) {
             // Update the guest account to a regular account
             try {
-                req.db.query('UPDATE users SET guest = ? username = ?, password = ?, WHERE id = ?',
-                [false, username, hashedPassword, req.session.userId], () => {
+                req.db.query('UPDATE users SET guest = ?, username = ?, email = ?, password = ? WHERE id = ?',
+                [false, username, email, hashedPassword, req.session.userId], () => {
                     req.session.username = username;
                     req.session.guest = false;
     
