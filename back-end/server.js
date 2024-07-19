@@ -5,6 +5,11 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
 
+const OpenAI = require("openai");
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
 const PORT = 8080;
 
 app.use(bodyParser.json());
@@ -30,6 +35,23 @@ app.post("/helped", (req, res) => {
         fs.writeFileSync("./data.json", JSON.stringify(data), { encoding: 'utf8' });
         return res.status(200).json({ helped: data.helped });
     } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+app.get("/chat", async (req, res) => {
+    try {
+        const completion = await openai.chat.completions.create({
+            messages: [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": "What is a LLM?"}
+              ],
+            model: "gpt-4o-mini",
+        });
+
+        return res.status(200).json({ message: completion.choices, data: completion })
+    } catch(err) {
         console.log(err);
         return res.status(500).json({ error: "Internal server error" });
     }
