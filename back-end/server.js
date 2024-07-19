@@ -94,6 +94,12 @@ app.use("/register-guest", (req, res, next) => {
     next();
 }, registerGuest)
 
+const loginRoute = require("./routes/login");
+app.use("/login", (req, res, next) => {
+    req.db = db;
+    next();
+}, loginRoute);
+
 app.post("/helped", (req, res) => {
     let data = JSON.parse(fs.readFileSync("./data.json", { encoding: 'utf8' }));
 
