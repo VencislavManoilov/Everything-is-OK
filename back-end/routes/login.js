@@ -7,7 +7,7 @@ route.post(
     '/',
     [
         body("username").notEmpty().withMessage("Username is required"),
-        boyd("password").notEmpty().withMessage("Password is required")
+        body("password").notEmpty().withMessage("Password is required")
     ]
     , async (req, res) => {
         // Check for validation errors
