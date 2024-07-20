@@ -49,7 +49,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         secure: false,
         httpOnly: true
     }
@@ -119,26 +119,18 @@ app.use("/logout", (req, res, next) => {
     next();
 }, logoutRoute);
 
-app.post("/helped", (req, res) => {
-    let data = JSON.parse(fs.readFileSync("./data.json", { encoding: 'utf8' }));
-
-    data.helped++;
-
-    try {
-        fs.writeFileSync("./data.json", JSON.stringify(data), { encoding: 'utf8' });
-        return res.status(200).json({ helped: data.helped });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ error: "Internal server error" });
-    }
-})
-
 app.get("/chat", async (req, res) => {
+    const { message } = req.body;
+
+    if(!message) {
+        return res.status(400).json({ error: "Message is required" });
+    }
+
     try {
         const completion = await openai.chat.completions.create({
             messages: [
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "What is a LLM?"}
+                {"role": "user", "content": message}
               ],
             model: "gpt-4o-mini",
         });
