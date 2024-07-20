@@ -125,6 +125,13 @@ app.use("/chat/create", (req, res, next) => {
     next();
 }, createChatRoute);
 
+const sendMessageRoute = require("./routes/sendMessage");
+app.use("/chat/send", (req, res, next) => {
+    req.db = db;
+    req.openai = openai;
+    next();
+}, sendMessageRoute);
+
 app.get("/chat", async (req, res) => {
     const { message } = req.body;
 
