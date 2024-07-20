@@ -119,6 +119,12 @@ app.use("/logout", (req, res, next) => {
     next();
 }, logoutRoute);
 
+const createChatRoute = require("./routes/createChat");
+app.use("/chat/create", (req, res, next) => {
+    req.db = db;
+    next();
+}, createChatRoute);
+
 app.get("/chat", async (req, res) => {
     const { message } = req.body;
 
@@ -131,7 +137,7 @@ app.get("/chat", async (req, res) => {
             messages: [
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": message}
-              ],
+            ],
             model: "gpt-4o-mini",
         });
 
