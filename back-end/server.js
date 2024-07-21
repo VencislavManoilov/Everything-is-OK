@@ -81,12 +81,12 @@ app.get("/user", isAuthenticated, (req, res) => {
             }
 
             if(results[0].password) {
-                return res.status(200).json({ user: results[0] });
-            } else {
                 let userWithoutPassword = results[0];
                 delete userWithoutPassword.password;
-
+                
                 return res.status(200).json({ user: userWithoutPassword });
+            } else {
+                return res.status(200).json({ user: results[0] });
             }
         });
     } catch(err) {
