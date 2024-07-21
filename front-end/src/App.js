@@ -4,7 +4,7 @@ import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
-const InitComponent = ({ user }) => {
+const InitComponent = ({ user, onRegisterGuest }) => {
     return user ? (
         <div>
             <div>{ user.guest ? "Guest" : "User" }</div>
@@ -20,7 +20,7 @@ const InitComponent = ({ user }) => {
         <div className="container">
             <button className="btn btn-success">Register</button>
             <button className="btn btn-primary">Login</button>
-            <button className="btn btn-secondary">Guest</button>
+            <button className="btn btn-secondary" onClick={() => {onRegisterGuest()}}>Guest</button>
         </div>
     )
 }
@@ -45,6 +45,16 @@ function App() {
         checkLoginStatus();
     }, []);
 
+    const RegisterGuest = async () => {
+        try {
+            const response = await axios.post(URL+"/register-guest", {}, { withCredentials: true });
+            console.log(response);
+            setUser({guest: true});
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+
     if(loading) {
         return <div>loading...</div>
     }
@@ -52,7 +62,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<InitComponent user={user} />} />
+                <Route path='/' element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
             </Routes>
         </Router>
     );
