@@ -132,6 +132,12 @@ app.use("/chat/send", (req, res, next) => {
     next();
 }, sendMessageRoute);
 
+const deleteChatRoute = require("./routes/deleteChat");
+app.use("/chat/delete", (req, res, next) => {
+    req.db = db;
+    next();
+}, deleteChatRoute);
+
 app.get("/chat", async (req, res) => {
     const { message } = req.body;
 
