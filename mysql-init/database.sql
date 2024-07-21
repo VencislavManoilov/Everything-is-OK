@@ -14,7 +14,7 @@ create table concerns (
 	id int auto_increment primary key,
     user_id int,
     title text,
-    message text not null,
+    messages text not null,
     created_at timestamp default current_timestamp,
     foreign key (user_id) references users(id)
 );
