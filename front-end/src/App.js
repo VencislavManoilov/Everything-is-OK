@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
@@ -17,7 +17,11 @@ const InitComponent = ({ user }) => {
             }
         </div>
     ) : (
-        <div>Hello World</div>
+        <div className="container">
+            <button className="btn btn-success">Register</button>
+            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-secondary">Guest</button>
+        </div>
     )
 }
 
