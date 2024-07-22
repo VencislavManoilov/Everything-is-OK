@@ -7,6 +7,7 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,8 +22,16 @@ const Register = () => {
             if(response.data.success) {
                 window.location.href = "/";
             }
-        } catch(error) {
-
+        } catch(err) {
+            if(err.response.data.errors) {
+                let msg = "";
+                for(let i = 0; i < err.response.data.errors.length; i++) {
+                    msg += err.response.data.errors[i] + "\n";
+                }
+                setError(msg.replace(/\n/g, '<br>'));
+            } else {
+                setError((err.response.data.error) ? err.response.data.error : "Login failed! Please check your information");
+            }
         }
     }
 
@@ -35,6 +44,12 @@ const Register = () => {
                             <h2>Register</h2>
                         </div>
                         <div className="card-body">
+                            {error && 
+                            <div className="alert alert-danger alert-dismissible">
+                                <div dangerouslySetInnerHTML={{ __html: error }}></div>
+                                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>}
+
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group mb-3">
                                     <label htmlFor="username">Username</label>
