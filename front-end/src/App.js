@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./components/Navbar";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
@@ -61,6 +62,7 @@ function App() {
 
     return (
         <Router>
+            <Navbar user={user} />
             <Routes>
                 <Route path='/' element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
             </Routes>
