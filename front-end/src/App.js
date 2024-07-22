@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Register from "./components/Register";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
@@ -16,8 +17,8 @@ const InitComponent = ({ user, onRegisterGuest }) => {
                 <p className="lead">Share your concerns and find out why you shouldn't be worrying.</p>
                 <hr className="my-4" />
                 <p className="lead">
-                    <button className="btn btn-success btn-lg mx-2">Register</button>
-                    <button className="btn btn-primary btn-lg mx-2">Login</button>
+                    <button className="btn btn-success btn-lg mx-2" onClick={() => { window.location.href = "/register" }}>Register</button>
+                    <button className="btn btn-primary btn-lg mx-2" onClick={() => { window.location.href = "/login" }}>Login</button>
                     <button className="btn btn-secondary btn-lg mx-2" onClick={() => { onRegisterGuest() }}>Continue as Guest</button>
                 </p>
             </div>
@@ -63,7 +64,8 @@ function App() {
         <Router>
             <Navbar user={user} />
             <Routes>
-                <Route path='/' element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
+                <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
             <Footer />
         </Router>
