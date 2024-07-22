@@ -51,6 +51,7 @@ route.post(
 
             req.session.userId = user.id;
             req.session.username = user.username;
+            req.email = user.email;
             req.session.guest = user.guest;
 
             res.status(200).json({ success: true });
