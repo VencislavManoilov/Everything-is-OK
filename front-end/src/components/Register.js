@@ -18,7 +18,6 @@ const Register = () => {
                 password: password
             }, { withCredentials: true });
 
-            console.log(response);
             if(response.data.success) {
                 window.location.href = "/";
             }
