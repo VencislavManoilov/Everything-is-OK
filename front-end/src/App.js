@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
+import Login from "./components/Login";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
@@ -66,6 +67,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
             <Footer />
         </Router>
