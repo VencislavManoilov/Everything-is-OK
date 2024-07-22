@@ -8,21 +8,19 @@ const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BA
 
 const InitComponent = ({ user, onRegisterGuest }) => {
     return user ? (
-        <div>
-            <div>{ user.guest ? "Guest" : "User" }</div>
-            { !user.guest ? (
-                    <div>
-                        <div>{ user.username }</div>
-                        <div>{ user.email }</div>
-                    </div>
-                ) : (<></>)
-            }
-        </div>
+        <div className="container h2">Welcome again, {user.username}!</div>
     ) : (
         <div className="container">
-            <button className="btn btn-success">Register</button>
-            <button className="btn btn-primary">Login</button>
-            <button className="btn btn-secondary" onClick={() => {onRegisterGuest()}}>Guest</button>
+            <div className="jumbotron text-center mt-5 p-5">
+                <h1 className="display-4">Everything is OK!</h1>
+                <p className="lead">Share your concerns and find out why you shouldn't be worrying.</p>
+                <hr className="my-4" />
+                <p className="lead">
+                    <button className="btn btn-success btn-lg mx-2">Register</button>
+                    <button className="btn btn-primary btn-lg mx-2">Login</button>
+                    <button className="btn btn-secondary btn-lg mx-2" onClick={() => { onRegisterGuest() }}>Continue as Guest</button>
+                </p>
+            </div>
         </div>
     )
 }
