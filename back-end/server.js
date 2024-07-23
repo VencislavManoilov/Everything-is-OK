@@ -127,6 +127,12 @@ app.use("/delete", (req, res, next) => {
     next();
 }, deleteAccountRoute);
 
+const getChatsRoute = require("./routes/getChats");
+app.use("/chat/getIds", (req, res, next) => {
+    req.db = db;
+    next();
+}, getChatsRoute);
+
 const createChatRoute = require("./routes/createChat");
 app.use("/chat/create", (req, res, next) => {
     req.db = db;
