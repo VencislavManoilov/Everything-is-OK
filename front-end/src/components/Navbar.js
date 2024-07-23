@@ -23,7 +23,7 @@ const Navbar = ({ user }) => {
 
                     <div className="d-flex">
                         {user ? <>
-                            <a className="nav-link">{user.username}</a>
+                            <a className="nav-link" href="/profile">{user.username}</a>
                         </> : <>
                             <button className="btn btn-outline-primary me-2" onClick={() => {window.location.href = "/login"}}>Login</button>
                             <button className="btn btn-outline-success" onClick={() => {window.location.href = "/register"}}>Register</button>

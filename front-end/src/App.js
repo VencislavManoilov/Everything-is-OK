@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
@@ -49,9 +50,9 @@ function App() {
 
     const RegisterGuest = async () => {
         try {
-            const response = await axios.post(URL+"/register-guest", {}, { withCredentials: true });
-            console.log(response);
+            await axios.post(URL+"/register-guest", {}, { withCredentials: true });
             setUser({guest: true});
+            window.location.href = "/";
         } catch (error) {
             setLoading(false);
         }
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile user={user} />} />
             </Routes>
             <Footer />
         </Router>
