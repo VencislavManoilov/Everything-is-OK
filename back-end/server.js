@@ -8,6 +8,8 @@ const session = require("express-session");
 const mysql = require("mysql2");
 const MySQLStore = require("express-mysql-session")(session);
 
+require("dotenv").config();
+
 const OpenAI = require("openai");
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
