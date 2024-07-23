@@ -133,6 +133,12 @@ app.use("/chat/getIds", (req, res, next) => {
     next();
 }, getChatsRoute);
 
+const getChatRoute = require("./routes/getChat");
+app.use("/chat/get", (req, res, next) => {
+    req.db = db;
+    next();
+}, getChatRoute);
+
 const createChatRoute = require("./routes/createChat");
 app.use("/chat/create", (req, res, next) => {
     req.db = db;
