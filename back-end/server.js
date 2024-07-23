@@ -121,6 +121,12 @@ app.use("/logout", (req, res, next) => {
     next();
 }, logoutRoute);
 
+const deleteAccountRoute = require("./routes/deleteAccount");
+app.use("/delete", (req, res, next) => {
+    req.db = db;
+    next();
+}, deleteAccountRoute);
+
 const createChatRoute = require("./routes/createChat");
 app.use("/chat/create", (req, res, next) => {
     req.db = db;
