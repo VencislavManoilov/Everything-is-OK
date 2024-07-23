@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = ({ user }) => {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav id="navbar" className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
                 <a className="navbar-brand fw-medium">Everything is OK!</a>
 
