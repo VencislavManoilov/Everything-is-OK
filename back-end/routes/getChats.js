@@ -13,7 +13,9 @@ route.get(
                 return res.status(500).json({ error: "Internal server error" });
             }
 
-            let chat = results.map(result => ({ id: result.id, title: result.title }));
+            let chat = results;
+            chat.map(result => ({ id: result.id, title: result.title }));
+            chat.reverse();
 
             return res.status(200).json(chat);
         });
