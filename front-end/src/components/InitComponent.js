@@ -50,7 +50,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 700) {
+            if (window.innerWidth < 800) {
                 setSidebar(false);
             } else {
                 setSidebar(true);
@@ -70,7 +70,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
             {sidebar && <Sidebar concerns={concerns} />}
             <Chat chat={chat} />
 
-            <div className="row justify-content-between" style={{position: "absolute", top: {buttonsY}, left: "13px", width: (sidebar ? "250px" : "108px")}}>
+            <div className="row justify-content-between" style={{zIndex: "1", position: "absolute", top: {buttonsY}, left: "13px", width: (sidebar ? "250px" : "108px")}}>
                 <button className="btn  mx-2 col-auto" style={{transform: "scale(1.5)"}} onClick={() => {setSidebar(!sidebar)}}>
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
