@@ -1,13 +1,13 @@
 const express = require("express");
 const route = express.Router();
-const { body, validationResult } = require("express-validator");
+const { query, validationResult } = require("express-validator");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 route.get(
     "/",
     isAuthenticated,
     [
-        body("id").notEmpty().withMessage("Chat ID is required")
+        query("id").notEmpty().withMessage("Chat ID is required")
     ],
     (req, res) => {
         // Check for validation errors
@@ -20,7 +20,7 @@ route.get(
             return res.status(400).json({ errors: errorMessages });
         }
 
-        const { id } = req.body;
+        const { id } = req.query;
 
         const query = "SELECT * FROM concerns WHERE id = ?";
         req.db.query(query, [id], (error, results) => {
