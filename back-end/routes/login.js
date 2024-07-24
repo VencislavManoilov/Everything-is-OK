@@ -41,12 +41,13 @@ route.post(
 
             if(req.session.guest) {
                 // Delete the guest account and login to regular account
-                req.db.query('DELETE FROM users WHERE id = ?', [req.session.userId], (error) => {
-                    if(error) {
-                        console.log(error);
-                        return res.status(500).json({ error: "Internal server error" });
-                    };
-                });
+                try{
+                    req.db.query("DELETE FROM concerns WHERE user_id = ?", [req.session.userId]);
+                    req.db.query('DELETE FROM users WHERE id = ?', [req.session.userId]);
+                } catch(error) {
+                    console.log(error);
+                    return res.status(500).json({ error: "Internal server error" });
+                }
             }
 
             req.session.userId = user.id;
