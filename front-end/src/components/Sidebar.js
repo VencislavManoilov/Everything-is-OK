@@ -16,7 +16,7 @@ const Concern = ({ concern, changeChatId, usingId }) => {
 
 const Sidebar = ({ concerns, changeChatId, usingId }) => {
     return (
-        <div className="d-flex flex-column bg-dark-subtle text-light p-3 vh-auto" style={{ width: '250px' }}>
+        <div className="d-flex flex-column bg-dark-subtle p-3 text-light vh-auto" style={{ width: '250px' }}>
             <div className="flex-grow-1 overflow-auto mt-5">
                 {concerns ?
                     (concerns.map(concern => (
