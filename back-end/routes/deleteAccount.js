@@ -4,6 +4,9 @@ const isAuthenticated = require("../middleware/isAuthenticated");
 
 route.delete("/", isAuthenticated, (req, res) => {
     try {
+        const deleteChatsQuery = "DELETE FROM concerns WHERE user_id = ?";
+        req.db.query(deleteChatsQuery, [req.session.userId]);
+
         const query = "DELETE FROM users WHERE id = ?";
         req.db.query(query, [req.session.userId], (error, results) => {
             if(error) {
