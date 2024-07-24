@@ -3,18 +3,20 @@ import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
-const Chat = ({ chat }) => {
+const Chat = ({ Chat }) => {
     const [message, setMessage] = useState("");
     const [id, setId] = useState(null);
     const [error, setError] = useState(false);
     const messagesEndRef = useRef(null);
     const [chatOverflow, setChatOverflow] = useState("hidden");
+    const [chat, setChat] = useState(Chat || { title: "", messages: [] });
 
     useEffect(() => {
+        setChat(Chat);
         if(chat) {
             setId(chat.id);
         }
-    }, [chat]);
+    }, [Chat, chat]);
 
     const handleSend = async () => {
         if(message.trim()) {
@@ -37,23 +39,26 @@ const Chat = ({ chat }) => {
         }
     };
 
-    const sendMessage = async (id) => {
+    const sendMessage = async (chatId) => {
         try {
-            const sendMessage = await axios.post(URL + "/chat/send", {
-                chatId: id,
-                message: message
+            const sendMessageResponse = await axios.post(URL + "/chat/send", {
+                chatId,
+                message,
             }, { withCredentials: true });
 
-            if(sendMessage.data.success) {
-                if(sendMessage.data.title) {
-                    chat.title = sendMessage.data.title;
-                }
-                chat.messages = sendMessage.data.chat;
-                setMessage(""); // Clear input after sending
-                scrollToBottom(); // Scroll to bottom
+            if(sendMessageResponse.data) {
+                const newChat = {
+                    title: sendMessageResponse.data.title || chat.title,
+                    messages: sendMessageResponse.data.chat,
+                };
+
+                setChat(newChat);
+                scrollToBottom();
+            } else {
+                setError("Unexpected response format");
             }
         } catch(err) {
-            setError("Error: " + err.response.data.error);
+            setError("Error: " + (err.response?.data?.error || "An unknown error occurred"));
         }
     };
 
@@ -63,13 +68,11 @@ const Chat = ({ chat }) => {
 
     useEffect(() => {
         scrollToBottom();
-        // window.scrollTo(0, 0);
     }, [chat?.messages]);
 
     useEffect(() => {
         const handleResize = () => {
             if(document.getElementById("chat")?.offsetHeight > window.innerHeight - 56 - 90 - 54) {
-                console.log("Hello")
                 setChatOverflow("scoll");
             } else {
                 setChatOverflow("hidden");
@@ -93,22 +96,26 @@ const Chat = ({ chat }) => {
                 </div>
             }
 
-            <div className="text-center pt-5 pb-2 px-2">
+            <div className="text-center pt-4 pb-2 px-2">
                 <h3>{(chat && chat.title) ? chat.title : "New Chat"}</h3>
             </div>
 
-            <div id="chat" className="flex-grow-1 w-100 px-3" style={{ overflowY: {chatOverflow}, overflowX: "hidden" }}>
+            <div id="chat" className="flex-grow-1 w-100 px-3" style={{ overflowY: chatOverflow, overflowX: "hidden" }}>
                 <div className="row justify-content-center">
                     <div className="col" style={{ maxWidth: "800px" }}>
-                        {chat && chat.messages.map((msg, index) => (
-                            msg.role !== 'system' && (
-                                <div key={index} className={`mb-3 ${msg.role === 'user' ? 'text-end' : 'text-start'}`}>
-                                    <div className={`d-inline-block p-2 ${msg.role === 'user' ? 'bg-secondary text-white text-start' : 'text-light'}`} style={{ borderRadius: '10px', maxWidth: (msg.role === "user" ? "60%" : "none") }}>
-                                        {msg.content}
+                        {chat?.messages.length > 0 ? (
+                            chat.messages.map((msg, index) => (
+                                msg.role !== 'system' && (
+                                    <div key={index} className={`mb-3 ${msg.role === 'user' ? 'text-end' : 'text-start'}`}>
+                                        <div className={`d-inline-block p-2 ${msg.role === 'user' ? 'bg-secondary text-white text-start' : 'text-light'}`} style={{ borderRadius: '10px', whiteSpace: 'pre-wrap', maxWidth: (msg.role === "user" ? "60%" : "none") }}>
+                                            {msg.content}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        ))}
+                                )
+                            ))
+                        ) : (
+                            <div>Hello World</div>
+                        )}
                     </div>
                 </div>
                 <div ref={messagesEndRef}></div>
@@ -119,11 +126,10 @@ const Chat = ({ chat }) => {
                     <div className="input-group mb-3 px-3">
                         <input
                             type="text"
-                            className="form-control bg-body-tertiary border-0"
+                            className="form-control bg-body-tertiary border-0 no-focus-highlight"
                             placeholder="Type a message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            style={{border: "none"}}
                         />
                         <div className="input-group-append">
                             <button className="btn btn-primary" onClick={handleSend}>

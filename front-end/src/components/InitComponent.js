@@ -9,7 +9,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     const [sidebar, setSidebar] = useState(true);
     const [concerns, setConcerns] = useState(null);
     const [buttonsY, setButtonsY] = useState("71px");
-    const [chatId, setChatId] = useState(13);
+    const [chatId, setChatId] = useState(null);
     const [chat, setChat] = useState(null);
 
     useEffect(() => {
@@ -23,29 +23,12 @@ const InitComponent = ({ user, onRegisterGuest }) => {
             }
         }
 
-        const getChat = async () => {
-            try {
-                const response = await axios.get(URL+"/chat/get", { 
-                    params: { id: chatId },
-                    withCredentials: true
-                });
-
-                response.data.concern.messages = JSON.parse(response.data.concern.messages);
-                response.data.concern.title = JSON.parse(response.data.concern.title);
-
-                setChat(response.data.concern);
-            } catch(error) {
-                setChat(null);
-            }
-        }
-
         const navbar = document.getElementById("navbar");
         if(navbar) {
             setButtonsY(navbar.offsetHeight);
         }
 
         getChats();
-        getChat();
     }, []);
 
     useEffect(() => {
@@ -65,10 +48,36 @@ const InitComponent = ({ user, onRegisterGuest }) => {
         };
     }, []);
 
+    useEffect(() => {
+        const getChat = async () => {
+            try {
+                const response = await axios.get(URL+"/chat/get", { 
+                    params: { id: chatId },
+                    withCredentials: true
+                });
+
+                response.data.concern.messages = JSON.parse(response.data.concern.messages);
+                response.data.concern.title = JSON.parse(response.data.concern.title);
+
+                setChat(response.data.concern);
+            } catch(error) {
+                setChat(null);
+            }
+        }
+
+        if(chatId) {
+            getChat();
+        }
+    }, [chatId]);
+
+    const changeChatId = (id) => {
+        setChatId(id);
+    }
+
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
-            {sidebar && <Sidebar concerns={concerns} />}
-            <Chat chat={chat} />
+            {sidebar && <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} />}
+            <Chat Chat={chat} />
 
             <div className="row justify-content-between" style={{zIndex: "1", position: "absolute", top: {buttonsY}, left: "13px", width: (sidebar ? "250px" : "108px")}}>
                 <button className="btn  mx-2 col-auto" style={{transform: "scale(1.5)"}} onClick={() => {setSidebar(!sidebar)}}>
