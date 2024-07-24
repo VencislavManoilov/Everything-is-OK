@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import Chat from "./Chat";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
@@ -8,6 +9,8 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     const [sidebar, setSidebar] = useState(true);
     const [concerns, setConcerns] = useState(null);
     const [buttonsY, setButtonsY] = useState("71px");
+    const [chatId, setChatId] = useState(13);
+    const [chat, setChat] = useState(null);
 
     useEffect(() => {
         const getChats = async () => {
@@ -20,12 +23,29 @@ const InitComponent = ({ user, onRegisterGuest }) => {
             }
         }
 
+        const getChat = async () => {
+            try {
+                const response = await axios.get(URL+"/chat/get", { 
+                    params: { id: chatId },
+                    withCredentials: true
+                });
+
+                response.data.concern.messages = JSON.parse(response.data.concern.messages);
+                response.data.concern.title = JSON.parse(response.data.concern.title);
+
+                setChat(response.data.concern);
+            } catch(error) {
+                setChat(null);
+            }
+        }
+
         const navbar = document.getElementById("navbar");
         if(navbar) {
             setButtonsY(navbar.offsetHeight);
         }
 
         getChats();
+        getChat();
     }, []);
 
     useEffect(() => {
@@ -48,6 +68,8 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
             {sidebar && <Sidebar concerns={concerns} />}
+            <Chat chat={chat} />
+
             <div className="row justify-content-between" style={{position: "absolute", top: {buttonsY}, left: "13px", width: (sidebar ? "250px" : "108px")}}>
                 <button className="btn  mx-2 col-auto" style={{transform: "scale(1.5)"}} onClick={() => {setSidebar(!sidebar)}}>
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
