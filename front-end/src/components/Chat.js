@@ -57,7 +57,7 @@ const Chat = ({ Chat, ID }) => {
 
     const sendMessage = async (chatId) => {
         try {
-            setChat({title: chat.title, messages: [...chat.messages, {role: "user", content: message}]});
+            setChat({title: chat.title ? chat.title : "New Chat", messages: [...chat.messages, {role: "user", content: message}]});
             setLoadingMsg(true);
 
             const sendMessageResponse = await axios.post(URL + "/chat/send", {
@@ -67,7 +67,7 @@ const Chat = ({ Chat, ID }) => {
 
             if(sendMessageResponse.data) {
                 const newChat = {
-                    title: sendMessageResponse.data.title || chat.title,
+                    title: sendMessageResponse.data.title.substring(1, sendMessageResponse.data.title.length-1) || chat.title,
                     messages: sendMessageResponse.data.chat,
                 };
 
@@ -160,7 +160,7 @@ const Chat = ({ Chat, ID }) => {
                             ref={inputRef}
                             type="text"
                             className="form-control bg-body-tertiary border-0 no-focus-highlight"
-                            placeholder="Type a message"
+                            placeholder="Write your concern"
                             value={message}
                             onChange={(e) => {setMessage(e.target.value)}}
                             autoComplete="off"
