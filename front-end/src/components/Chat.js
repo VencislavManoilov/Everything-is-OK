@@ -166,10 +166,14 @@ const Chat = ({ Chat, ID }) => {
                             autoComplete="off"
                             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                         />
-                        <div className="input-group-append">
-                            <button className="btn btn-primary" onClick={handleSend}>
-                                Send
-                            </button>
+                        <div className="align-content-center bg-body-tertiary rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
+                            <div className="input-group-append" style={{width: "30px", height: "30px"}}>
+                                <button className="btn btn-dark border-0 p-0 w-100 h-100" style={{borderRadius: "50%", transform: "translateX(2px)"}} onClick={handleSend}>
+                                    <svg width="20" height="20" fill="currentColor" style={{transform: "translateY(-2px)"}} viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
