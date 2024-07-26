@@ -40,7 +40,7 @@ const Sidebar = ({ concerns, changeChatId, usingId }) => {
 
     return (
         <div className="d-flex flex-column bg-dark-subtle text-light vh-auto" style={{ width: '250px' }}>
-            <div className="flex-grow-1 overflow-auto mt-5 pb-2 ps-4 pe-2 p-0">
+            <div className="flex-grow-1 overflow-auto mt-5 pb-2 ps-4 pe-2 p-0 overflow-x-hidden">
                 {concerns ?
                     (concerns.map(concern => (
                         <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
