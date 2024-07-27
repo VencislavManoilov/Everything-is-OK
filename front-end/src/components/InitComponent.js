@@ -82,24 +82,8 @@ const InitComponent = ({ user, onRegisterGuest }) => {
 
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
-            {sidebar && <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} />}
+            {sidebar && <Sidebar setSidebar={() => setSidebar(!sidebar)} NewChat={NewChat} concerns={concerns} changeChatId={changeChatId} usingId={chatId} />}
             <Chat Chat={chat} />
-
-            <div className="row justify-content-between" style={{zIndex: "1", position: "absolute", top: {buttonsY}, left: "13px", width: (sidebar ? "250px" : "108px")}}>
-                <button className="btn  mx-2 col-auto" style={{transform: "scale(1.5)"}} onClick={() => {setSidebar(!sidebar)}}>
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
-                        <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h4v8H2a1 1 0 0 1-1-1m5 1V6h9v7a1 1 0 0 1-1 1z"/>
-                    </svg>
-                </button>
-
-                <button onClick={() => {NewChat()}} className="btn me-2 col-auto" style={{transform: "scale(1.5)"}}>
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                </button>
-            </div>
         </div>
     ) : (
         <div className="container">
