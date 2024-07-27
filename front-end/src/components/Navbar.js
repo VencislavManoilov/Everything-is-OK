@@ -17,7 +17,7 @@ const Navbar = ({ user }) => {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link" href="#">FAQ</a>
+                            <a className="nav-link" href="/FAQ">FAQ</a>
                         </li>
                     </ul>
 
