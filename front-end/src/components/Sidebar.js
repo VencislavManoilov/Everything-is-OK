@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
@@ -25,6 +25,10 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
 const Sidebar = ({ concerns, changeChatId, usingId }) => {
     const [deleteId, setId] = useState(null);
 
+    useEffect(() => {
+        console.log(concerns);
+    }, [concerns]);
+
     const Delete = async () => {
         try {
             const response = await axios.delete(URL+"/chat/delete", {
@@ -41,11 +45,13 @@ const Sidebar = ({ concerns, changeChatId, usingId }) => {
     return (
         <div className="d-flex flex-column bg-dark-subtle text-light vh-auto" style={{ width: '250px' }}>
             <div className="flex-grow-1 overflow-auto mt-5 pb-2 ps-4 pe-2 p-0 overflow-x-hidden">
-                {concerns ?
+                <div className="h5">History</div>
+                {(concerns && concerns.length != 0) ? (
                     (concerns.map(concern => (
                         <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
                     )))
-                : <p className="text-center">No concerns</p>
+                )
+                : (<p className="text-center text-body-tertiary">No concerns</p>)
                 }
             </div>
 
