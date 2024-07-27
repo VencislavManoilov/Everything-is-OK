@@ -6,9 +6,7 @@ import Chat from "./Chat";
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
 const InitComponent = ({ user, onRegisterGuest }) => {
-    const [sidebar, setSidebar] = useState(true);
     const [concerns, setConcerns] = useState(null);
-    const [buttonsY, setButtonsY] = useState("71px");
     const [chatId, setChatId] = useState(null);
     const [chat, setChat] = useState(null);
 
@@ -23,29 +21,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
             }
         }
 
-        const navbar = document.getElementById("navbar");
-        if(navbar) {
-            setButtonsY(navbar.offsetHeight);
-        }
-
         getChats();
-    }, []);
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 800) {
-                setSidebar(false);
-            } else {
-                setSidebar(true);
-            }
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
     }, []);
 
     useEffect(() => {
@@ -70,19 +46,13 @@ const InitComponent = ({ user, onRegisterGuest }) => {
         }
     }, [chatId]);
 
-    const NewChat = () => {
-        if(chatId) {
-            window.location.href = "/";
-        }
-    }
-
     const changeChatId = (id) => {
         setChatId(id);
     }
 
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
-            {sidebar && <Sidebar setSidebar={() => setSidebar(!sidebar)} NewChat={NewChat} concerns={concerns} changeChatId={changeChatId} usingId={chatId} />}
+            <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} />
             <Chat Chat={chat} />
         </div>
     ) : (

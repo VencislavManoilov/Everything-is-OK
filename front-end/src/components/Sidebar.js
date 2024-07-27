@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
@@ -22,9 +22,30 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
     );
 }
 
-const Sidebar = ({ setSidebar, NewChat, concerns, changeChatId, usingId }) => {
+const Sidebar = ({ concerns, changeChatId, usingId }) => {
     const [deleteId, setId] = useState(null);
     const [visible, setVisible] = useState("visible")
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 800) {
+                setVisible("hidden");
+            } else {
+                setVisible("visible");
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const NewChat = () => {
+        window.location.href = "/";
+    }
 
     const Delete = async () => {
         try {
@@ -40,8 +61,8 @@ const Sidebar = ({ setSidebar, NewChat, concerns, changeChatId, usingId }) => {
     }
 
     return (
-        <div className="d-flex flex-column bg-dark-subtle text-light vh-auto" style={{ width: '250px', visibility: visible }}>
-            <div className={`row w-100 m-0 ${visible == "visible" ? "justify-content-between" : "justify-content-start"} align-items-center`} style={{visibility: "visible"}}>
+        <div className="d-flex flex-column bg-dark-subtle text-light vh-auto" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
+            <div className={`row m-0 ${visible == "visible" ? "justify-content-between" : "justify-content-start"} align-items-center`} style={{width: "250px", visibility: "visible"}}>
                 <button className="btn p-2 col-auto" style={{width: "41px", height: "41px"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
                     <svg width="25px" height="25px" style={{transform: "translateY(-2px)"}} fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
