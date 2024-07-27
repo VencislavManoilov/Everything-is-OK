@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import InitComponent from "./components/InitComponent";
+import FAQ from "./components/FAQ";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
@@ -49,6 +50,7 @@ function App() {
             <Navbar user={user} />
             <Routes>
                 <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
+                <Route path="/FAQ" element={<FAQ />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<Profile user={user} />} />
