@@ -11,18 +11,18 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     const [chatId, setChatId] = useState(null);
     const [chat, setChat] = useState(null);
 
-    useEffect(() => {
-        const getChats = async () => {
-            try {
-                const response = await axios.get(URL+"/chat/getIds", { withCredentials: true });
-    
-                setConcerns(response.data);
-            } catch (error) {
-                setConcerns(false);
-            }
-        }
+    const LoadChats = async () => {
+        try {
+            const response = await axios.get(URL+"/chat/getIds", { withCredentials: true });
 
-        getChats();
+            setConcerns(response.data);
+        } catch (error) {
+            setConcerns(false);
+        }
+    }
+
+    useEffect(() => {
+        LoadChats();
     }, []);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
             <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} />
-            <Chat Chat={chat} />
+            <Chat Chat={chat} LoadChats={LoadChats} />
         </div>
     ) : (
         <div className="container">

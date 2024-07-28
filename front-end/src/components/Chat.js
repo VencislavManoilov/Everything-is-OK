@@ -3,7 +3,7 @@ import axios from "axios";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
-const Chat = ({ Chat, ID }) => {
+const Chat = ({ Chat, LoadChats }) => {
     const [message, setMessage] = useState("");
     const [id, setId] = useState(null);
     const [error, setError] = useState(false);
@@ -73,6 +73,8 @@ const Chat = ({ Chat, ID }) => {
 
                 setLoadingMsg(false);
                 setChat(newChat);
+
+                LoadChats();
 
                 scrollToBottom();
             } else {
