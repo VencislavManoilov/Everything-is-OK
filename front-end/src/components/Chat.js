@@ -27,6 +27,10 @@ const Chat = ({ Chat, LoadChats }) => {
     }, [chat]);
 
     const handleSend = async () => {
+        if(loadingMsg) {
+            return;
+        }
+
         setMessage("");
 
         if(message.trim()) {
