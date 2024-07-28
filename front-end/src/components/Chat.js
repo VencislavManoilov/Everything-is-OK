@@ -11,14 +11,12 @@ const Chat = ({ Chat, LoadChats }) => {
     const inputRef = useRef(null);
     const [chatOverflow, setChatOverflow] = useState("scroll");
     const [chat, setChat] = useState(Chat || { title: "", messages: [] });
-    const [loaded, setLoaded] = useState(false);
     const [loadingMsg, setLoadingMsg] = useState(false);
 
 
     useEffect(() => {
         if(Chat) {
             setChat(Chat);
-            setLoaded(true);
             console.log("Idk");
         }
     }, [Chat]);
@@ -67,7 +65,7 @@ const Chat = ({ Chat, LoadChats }) => {
 
             if(sendMessageResponse.data) {
                 const newChat = {
-                    title: sendMessageResponse.data.title.substring(1, sendMessageResponse.data.title.length-1) || chat.title,
+                    title: sendMessageResponse.data.title?.substring(1, sendMessageResponse.data.title.length-1) || chat.title,
                     messages: sendMessageResponse.data.chat,
                 };
 
@@ -85,6 +83,33 @@ const Chat = ({ Chat, LoadChats }) => {
             setError("Error: " + (err.response?.data?.error || "An unknown error occurred"));
         }
     };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            setMessage((prev) => prev.substring(0, start) + '\t' + prev.substring(end));
+            setTimeout(() => {
+                inputRef.current.selectionStart = inputRef.current.selectionEnd = start + 1;
+            }, 0);
+        }
+    };
+    
+    useEffect(() => {
+        if (inputRef.current) {
+            const lineHeight = parseFloat(getComputedStyle(inputRef.current).lineHeight);
+            const maxLines = 9;
+            const maxHeight = lineHeight * maxLines;
+        
+            inputRef.current.style.height = 'auto';
+            inputRef.current.style.overflowY = inputRef.current.scrollHeight > maxHeight ? 'auto' : 'hidden';
+            inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, maxHeight)}px`;
+        }
+    }, [message]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
@@ -158,16 +183,16 @@ const Chat = ({ Chat, LoadChats }) => {
             <div className="row justify-content-center">
                 <div className="col" style={{ maxWidth: "800px" }}>
                     <div className="input-group mb-3 px-3">
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            className="form-control bg-body-tertiary border-0 no-focus-highlight"
-                            placeholder="Write your concern"
-                            value={message}
-                            onChange={(e) => {setMessage(e.target.value)}}
-                            autoComplete="off"
-                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                        />
+                    <textarea
+                        ref={inputRef}
+                        className="form-control bg-body-tertiary border-0 no-focus-highlight"
+                        placeholder="Write your concern"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        rows={1}
+                        style={{ overflowY: 'hidden', resize: 'none' }}>
+                    </textarea>
                         <div className="align-content-center bg-body-tertiary rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
                             <div className="input-group-append" style={{width: "30px", height: "30px"}}>
                                 <button className="btn btn-dark border-0 p-0 w-100 h-100" style={{borderRadius: "50%", transform: "translateX(2px)"}} onClick={handleSend}>
