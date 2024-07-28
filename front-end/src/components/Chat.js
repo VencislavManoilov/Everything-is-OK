@@ -17,7 +17,6 @@ const Chat = ({ Chat, LoadChats }) => {
     useEffect(() => {
         if(Chat) {
             setChat(Chat);
-            console.log("Idk");
         }
     }, [Chat]);
 
