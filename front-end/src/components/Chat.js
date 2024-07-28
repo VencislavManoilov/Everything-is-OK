@@ -27,9 +27,7 @@ const Chat = ({ Chat, LoadChats }) => {
     }, [chat]);
 
     const handleSend = async () => {
-        if(inputRef.current) {
-            inputRef.current.value = "";
-        }
+        setMessage("");
 
         if(message.trim()) {
             if(!id) {
