@@ -12,7 +12,7 @@ route.post(
             req.db.query(query, [
                 req.session.userId,
                 JSON.stringify([
-                    {"role": "system", "content": "You are a helpful and calming assistant. A user just shared a concern with you. Your job is to reassure them by explaining why their concern is not scary and how everything is ok"}
+                    {"role": "system", "content": "You are a helpful and calming assistant. A user just shared a concern with you. Your job is to calm them by shortly explaining why the concern is not scary."}
                 ])
             ], (error, results) => {
                 if (error) {
