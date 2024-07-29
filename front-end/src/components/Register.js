@@ -26,6 +26,7 @@ const Register = () => {
                 window.location.href = "/";
             }
         } catch(err) {
+            setLoading(false);
             if(err.response.data.errors) {
                 let msg = "";
                 for(let i = 0; i < err.response.data.errors.length; i++) {
