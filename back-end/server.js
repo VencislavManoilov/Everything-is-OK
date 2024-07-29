@@ -135,29 +135,6 @@ app.use("/chat/delete", (req, res, next) => {
     next();
 }, deleteChatRoute);
 
-app.get("/chat", async (req, res) => {
-    const { message } = req.body;
-
-    if(!message) {
-        return res.status(400).json({ error: "Message is required" });
-    }
-
-    try {
-        const completion = await openai.chat.completions.create({
-            messages: [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": message}
-            ],
-            model: "gpt-4o-mini",
-        });
-
-        return res.status(200).json({ message: completion.choices, data: completion })
-    } catch(err) {
-        console.log(err);
-        return res.status(500).json({ error: "Internal server error" });
-    }
-})
-
 app.get("*", (req, res) => {
     res.status(404).json({ message: "Not Found" });
 })
