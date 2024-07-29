@@ -10,13 +10,17 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     const [concerns, setConcerns] = useState(null);
     const [chatId, setChatId] = useState(null);
     const [chat, setChat] = useState(null);
+    const [loadingChat, setLoadingChat] = useState(false);
+    const [loadingIds, setLoadingIds] = useState(false);
 
     const LoadChats = async () => {
         if(user) {
             try {
+                setLoadingIds(true);
                 const response = await axios.get(URL+"/chat/getIds", { withCredentials: true });
     
                 setConcerns(response.data);
+                setLoadingIds(false);
             } catch (error) {
                 setConcerns(false);
             }
@@ -30,10 +34,13 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     useEffect(() => {
         const getChat = async () => {
             try {
+                setLoadingChat(true);
                 const response = await axios.get(URL+"/chat/get", { 
                     params: { id: chatId },
                     withCredentials: true
                 });
+
+                setLoadingChat(false);
 
                 response.data.concern.messages = JSON.parse(response.data.concern.messages);
                 response.data.concern.title = JSON.parse(response.data.concern.title);
@@ -41,6 +48,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
                 setChat(response.data.concern);
             } catch(error) {
                 setChat(null);
+                setLoadingChat(false);
             }
         }
 
@@ -55,8 +63,17 @@ const InitComponent = ({ user, onRegisterGuest }) => {
 
     return user ? (
         <div className="d-flex justify-content-start vh-100" style={{paddingBottom: "52px"}}>
-            <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} />
-            <Chat Chat={chat} LoadChats={LoadChats} />
+            <Sidebar concerns={concerns} changeChatId={changeChatId} usingId={chatId} loading={loadingIds} />
+
+            {!loadingChat ? (
+                <Chat Chat={chat} LoadChats={LoadChats} />
+            ) : (
+                <div className="w-100 h-100 text-center align-content-center">
+                    <div className="spinner-border text-center mx-auto" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
         </div>
     ) : (
         <div className="container">

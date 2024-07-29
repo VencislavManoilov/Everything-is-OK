@@ -22,7 +22,7 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
     );
 }
 
-const Sidebar = ({ concerns, changeChatId, usingId }) => {
+const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
     const [deleteId, setId] = useState(null);
     const [visible, setVisible] = useState("visible")
 
@@ -80,12 +80,20 @@ const Sidebar = ({ concerns, changeChatId, usingId }) => {
 
             <div className="flex-grow-1 overflow-auto pb-2 ps-4 pe-2 p-0 overflow-x-hidden">
                 <div className="h5 mt-2">History</div>
-                {(concerns && concerns.length != 0) ? (
-                    (concerns.map(concern => (
-                        <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
-                    )))
-                )
-                : (<p className="text-center text-body-tertiary">No concerns</p>)
+                {!loading ? 
+                    ((concerns && concerns.length != 0) ? (
+                        (concerns.map(concern => (
+                            <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
+                        )))
+                    )
+                    : (<p className="text-center text-body-tertiary">No concerns</p>)
+                    ) : (
+                        <div className="w-100 text-center">
+                            <div className="spinner-border text-center mx-auto" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    )
                 }
             </div>
 
