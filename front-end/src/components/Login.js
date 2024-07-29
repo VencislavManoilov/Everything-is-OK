@@ -7,17 +7,21 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            setLoading(true);
+
             const response = await axios.post(URL+"/login", {
                 username: username,
                 password: password
             }, { withCredentials: true });
 
             if(response.data.success) {
+                setLoading(false);
                 window.location.href = "/";
             }
         } catch(err) {
@@ -31,6 +35,16 @@ const Login = () => {
                 setError((err.response.data.error) ? err.response.data.error : "Login failed! Please check your information");
             }
         }
+    }
+
+    if(loading) {
+        return (
+            <div className="w-100 vh-100 text-center align-content-center">
+                <div className="spinner-border text-center mx-auto" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
     }
 
     return (
