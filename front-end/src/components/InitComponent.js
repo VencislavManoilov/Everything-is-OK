@@ -12,12 +12,14 @@ const InitComponent = ({ user, onRegisterGuest }) => {
     const [chat, setChat] = useState(null);
 
     const LoadChats = async () => {
-        try {
-            const response = await axios.get(URL+"/chat/getIds", { withCredentials: true });
-
-            setConcerns(response.data);
-        } catch (error) {
-            setConcerns(false);
+        if(user) {
+            try {
+                const response = await axios.get(URL+"/chat/getIds", { withCredentials: true });
+    
+                setConcerns(response.data);
+            } catch (error) {
+                setConcerns(false);
+            }
         }
     }
 
