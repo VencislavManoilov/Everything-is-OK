@@ -8,12 +8,14 @@ import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import Error from "./components/Error";
 
 const URL = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_CUSTOM_BACKEND_URL || "http://localhost:8080";
 
 function App() {
     const [user, setUser] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -38,6 +40,7 @@ function App() {
             window.location.href = "/";
         } catch (error) {
             setLoading(false);
+            setError(true);
         }
     }
 
@@ -46,17 +49,21 @@ function App() {
     }
 
     return (
-        <Router>
-            <Navbar user={user} />
-            <Routes>
-                <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
-                <Route path="/FAQ" element={<FAQ />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/profile" element={<Profile user={user} />} />
-            </Routes>
-            {/* <Footer /> */}
-        </Router>
+        (!error ? (
+            <Router>
+                <Navbar user={user} />
+                <Routes>
+                    <Route path="/" element={<InitComponent user={user} onRegisterGuest={RegisterGuest} />} />
+                    <Route path="/FAQ" element={<FAQ />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/profile" element={<Profile user={user} />} />
+                </Routes>
+                {/* <Footer /> */}
+            </Router>
+        ) : (
+            <Error />
+        ))
     );
 }
 
