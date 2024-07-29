@@ -45,7 +45,13 @@ function App() {
     }
 
     if(loading) {
-        return <div>loading...</div>
+        return (
+            <div className="w-100 vh-100 text-center align-content-center">
+                <div className="spinner-border text-center mx-auto" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
     }
 
     return (
