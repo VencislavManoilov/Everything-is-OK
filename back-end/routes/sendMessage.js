@@ -54,7 +54,7 @@ route.post(
                     try {
                         const getTitle = await req.openai.chat.completions.create({
                             messages: [
-                                {"role": "system", "content": "Create a title for the chat based on the first message"},
+                                {"role": "system", "content": "Create a title for the chat based on the first message that is about a concern that the user has"},
                                 {"role": "user", "content": message}
                             ],
                             model: "gpt-4o-mini"
