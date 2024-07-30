@@ -62,7 +62,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
 
     return (
         <div className="d-flex flex-column bg-dark-subtle text-light vh-auto smooth" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
-            <div className={`row m-0 smooth ${visible == "visible" ? "justify-content-between" : "justify-content-start"} align-items-center`} style={{width: "250px", visibility: "visible"}}>
+            <div className={`row m-0 smooth justify-content-between align-items-center`} style={{width: visible == "visible" ? "250px" : "82px", visibility: "visible"}}>
                 <button className="btn p-2 col-auto border-0 no-highlight" style={{width: "41px", height: "41px"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
                     <svg width="25px" height="25px" style={{transform: "translateY(-2px)"}} fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
