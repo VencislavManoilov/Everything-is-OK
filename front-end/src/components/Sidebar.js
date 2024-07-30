@@ -9,7 +9,7 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
     }
 
     return (
-        <div className="row">
+        <div className="row" style={{width: "225px"}}>
             <button onClick={() => {openConcern()}} className={`btn ${usingId === concern.id ? "btn-secondary" : "btn-dark"} col-10 bg-opacity-50 overflow-hidden text-start text-truncate my-2`}>
                 {concern.title ? concern.title.substring(1, concern.title.length-1) : "New Chat"}
             </button>
@@ -61,8 +61,8 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
     }
 
     return (
-        <div className="d-flex flex-column bg-dark-subtle text-light vh-auto" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
-            <div className={`row m-0 ${visible == "visible" ? "justify-content-between" : "justify-content-start"} align-items-center`} style={{width: "250px", visibility: "visible"}}>
+        <div className="d-flex flex-column bg-dark-subtle text-light vh-auto smooth" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
+            <div className={`row m-0 smooth ${visible == "visible" ? "justify-content-between" : "justify-content-start"} align-items-center`} style={{width: "250px", visibility: "visible"}}>
                 <button className="btn p-2 col-auto border-0 no-highlight" style={{width: "41px", height: "41px"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
                     <svg width="25px" height="25px" style={{transform: "translateY(-2px)"}} fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
@@ -70,7 +70,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
                     </svg>
                 </button>
 
-                <button className="btn p-2 col-auto border-0 no-highlight" style={{width: "41px", height: "41px"}} onClick={() => NewChat()}>
+                <button className="btn p-2 col-auto border-0 no-highlight smooth" style={{width: "41px", height: "41px"}} onClick={() => NewChat()}>
                     <svg width="25px" height="25px" style={{transform: "translateY(-2px)"}} fill="currentColor" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -78,7 +78,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
                 </button>
             </div>
 
-            <div className="flex-grow-1 overflow-auto pb-2 ps-4 pe-2 p-0 overflow-x-hidden">
+            <div className="flex-grow-1 overflow-x-hidden pb-2 ps-4 pe-2 p-0" style={{overflow: (visible == "visible") ? "auto" : "hidden"}}>
                 <div className="h5 mt-2">History</div>
                 {!loading ? 
                     ((concerns && concerns.length != 0) ? (
