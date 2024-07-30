@@ -194,7 +194,7 @@ const Chat = ({ Chat, LoadChats }) => {
                         rows={1}
                         style={{ overflowY: 'hidden', resize: 'none' }}>
                     </textarea>
-                        <div className="align-content-center bg-body-tertiary rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
+                        <div title="Send" className="align-content-center bg-body-tertiary rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
                             <div className="input-group-append" style={{width: "30px", height: "30px"}}>
                                 <button className="btn btn-dark border-0 p-0 w-100 h-100" style={{borderRadius: "50%", transform: "translateX(2px)"}} onClick={handleSend}>
                                     <svg width="20" height="20" fill="currentColor" style={{transform: "translateY(-2px)"}} viewBox="0 0 16 16">
