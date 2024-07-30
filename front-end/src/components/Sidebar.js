@@ -9,13 +9,13 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
     }
 
     return (
-        <div className="row" style={{width: "225px"}}>
+        <div className="row" style={{width: "220px"}}>
             <button onClick={() => {openConcern()}} className={`btn ${usingId === concern.id ? "btn-secondary" : "btn-dark"} col-10 bg-opacity-50 overflow-hidden text-start text-truncate my-2`}>
                 {concern.title ? concern.title.substring(1, concern.title.length-1) : "New Chat"}
             </button>
-            <div className="col-2 p-0 align-content-center text-center">
-                <button className="btn border-0 smooth btn-sidebar" onClick={() => {setId(concern.id)}} data-bs-toggle="modal" data-bs-target="#delete">
-                    <svg className="p-0" width="16" height="16" fill="#dc3545" viewBox="0 0 16 16">
+            <div title="Delete" className="col-2 mt-2 p-0 align-content-center text-center" style={{height: "36px"}}>
+                <button className="btn border-0 p-0 smooth btn-sidebar rounded-circle" style={{width: "30px", height: "30px", transform: "translateY(2px)"}} onClick={() => {setId(concern.id)}} data-bs-toggle="modal" data-bs-target="#delete">
+                    <svg style={{transform: "translateY(-2px)"}} width="16" height="16" fill="#dc3545" viewBox="0 0 16 16">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                     </svg>
                 </button>
@@ -65,7 +65,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
     return (
         <div className="d-flex flex-column bg-dark-subtle text-light vh-auto smooth" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
             <div className={`row m-0 smooth justify-content-between align-items-center`} style={{width: visible == "visible" ? "250px" : "82px", visibility: "visible"}}>
-                <div className="p-0 align-content-center text-center" style={{width: "41px", height: "41px"}}>
+                <div title={visible == "visible" ? "Hide Sidebar" : "Show Sidebar"} className="p-0 align-content-center text-center" style={{width: "41px", height: "41px"}}>
                     <button className="btn btn-sidebar p-0 m-0 col-auto border-0 no-highlight smooth" style={{width: "35px", height: "35px"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
                         <svg width="25px" height="25px" style={{transform: "translateY(-1px)"}} fill="currentColor" viewBox="0 0 16 16">
                             <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
@@ -74,7 +74,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
                     </button>
                 </div>
 
-                <div className="p-0 align-content-center text-center" style={{width: "41px", height: "41px"}}>
+                <div title="New Chat" className="p-0 align-content-center text-center" style={{width: "41px", height: "41px"}}>
                     <button className="btn btn-sidebar p-0 m-0 col-auto border-0 no-highlight smooth" style={{width: "35px", height: "35px"}} onClick={() => NewChat()}>
                         <svg width="25px" height="25px" style={{transform: "translateY(-1px)"}} fill="currentColor" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -92,7 +92,7 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
                             <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
                         )))
                     )
-                    : (<p className="text-center text-body-tertiary">No concerns</p>)
+                    : (<p className="text-center text-body-tertiary p-0 m-0" style={{width: "202px"}}>No concerns</p>)
                     ) : (
                         <div className="w-100 text-center">
                             <div className="spinner-border text-center mx-auto" role="status">
