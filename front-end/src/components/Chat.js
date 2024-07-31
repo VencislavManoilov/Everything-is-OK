@@ -12,6 +12,7 @@ const Chat = ({ Chat, LoadChats }) => {
     const [chatOverflow, setChatOverflow] = useState("scroll");
     const [chat, setChat] = useState(Chat || { title: "", messages: [] });
     const [loadingMsg, setLoadingMsg] = useState(false);
+    const [loadingTitle, setLoadingTitle] = useState(false);
 
 
     useEffect(() => {
@@ -23,6 +24,10 @@ const Chat = ({ Chat, LoadChats }) => {
     useEffect(() => {
         if(chat.id) {
             setId(chat.id);
+        }
+
+        if(chat.messages.length == 3 && !chat.title) {
+            setTitle();
         }
     }, [chat]);
 
@@ -54,10 +59,36 @@ const Chat = ({ Chat, LoadChats }) => {
         }
     };
 
+    const setTitle = async () => {
+        let message = "";
+        if(chat.messages[1].content) {
+            message = chat.messages[1].content;
+        } else {
+            console.log(chat);
+            return;
+        }
+
+        try {
+            let message = chat.messages[1].content;
+            const response = await axios.post(URL+"/chat/title", {
+                id,
+                message
+            }, { withCredentials: true });
+
+            setLoadingTitle(false);
+            setChat({title: response.data.title.substring(1, response.data.title.length-1), messages: chat.messages});
+            LoadChats();
+        } catch(error) {
+            setLoadingTitle(false);
+        }
+    }
+
     const sendMessage = async (chatId) => {
         try {
             setChat({title: chat.title ? chat.title : "New Chat", messages: [...chat.messages, {role: "user", content: message}]});
             setLoadingMsg(true);
+            if(!chat.title)
+            setLoadingTitle(true);
 
             const sendMessageResponse = await axios.post(URL + "/chat/send", {
                 chatId,
@@ -66,14 +97,12 @@ const Chat = ({ Chat, LoadChats }) => {
 
             if(sendMessageResponse.data) {
                 const newChat = {
-                    title: sendMessageResponse.data.title?.substring(1, sendMessageResponse.data.title.length-1) || chat.title,
+                    title: chat.title,
                     messages: sendMessageResponse.data.chat,
                 };
 
                 setLoadingMsg(false);
                 setChat(newChat);
-
-                LoadChats();
 
                 scrollToBottom();
             } else {
@@ -147,7 +176,13 @@ const Chat = ({ Chat, LoadChats }) => {
             }
 
             <div className="text-center pt-5 pb-2 px-2">
-                <h3>{(chat && chat.title) ? chat.title : ""}</h3>
+                {!loadingTitle ? (
+                    <h3>{(chat && chat.title) ? chat.title : ""}</h3>
+                ) : (
+                    <div className="spinner-border text-center mx-auto" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                )}
             </div>
 
             <div id="chat" className="flex-grow-1 w-100 px-3" style={{ overflowY: {chatOverflow}, overflowX: "hidden" }}>
