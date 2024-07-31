@@ -49,6 +49,10 @@ route.post(
 
                 let title = getTitle.choices[0].message.content;
 
+                if(title[0] == '"' && title[title.length - 1] == '"') {
+                    title = title.substring(1, title.length-1);
+                }
+
                 const saveQuery = "UPDATE concerns SET title = ? WHERE id = ?";
                 req.db.query(saveQuery, [title, id]);
 
