@@ -76,7 +76,7 @@ const Chat = ({ Chat, LoadChats }) => {
             }, { withCredentials: true });
 
             setLoadingTitle(false);
-            setChat({title: response.data.title.substring(1, response.data.title.length-1), messages: chat.messages});
+            setChat({title: response.data.title, messages: chat.messages});
             LoadChats();
         } catch(error) {
             setLoadingTitle(false);
@@ -179,8 +179,11 @@ const Chat = ({ Chat, LoadChats }) => {
                 {!loadingTitle ? (
                     <h3>{(chat && chat.title) ? chat.title : ""}</h3>
                 ) : (
-                    <div className="spinner-border text-center mx-auto" role="status">
-                        <span className="visually-hidden">Loading...</span>
+                    <div className="row justify-content-center">
+                        <p className="col-auto h3">New Chat </p>
+                        <div className="col-auto spinner-border text-center" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
                     </div>
                 )}
             </div>
