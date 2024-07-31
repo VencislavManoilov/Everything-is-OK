@@ -47,38 +47,14 @@ route.post(
 
                 chat.push(completion.choices[0].message);
 
-                let title = "";
-
-                // This checks if it is the first question and creates a title for the chat
-                if(chat.length == 3) {
-                    try {
-                        const getTitle = await req.openai.chat.completions.create({
-                            messages: [
-                                {"role": "system", "content": "Create a title for the chat based on the first message that is about a concern that the user has"},
-                                {"role": "user", "content": message}
-                            ],
-                            model: "gpt-4o-mini"
-                        })
-
-                        title = getTitle.choices[0].message.content;
-                    } catch(err) {
-                        console.log(err);
-                        return res.status(500).json({ error: "Internal server error" });
-                    }
-                }
-
                 try {
-                    const query = title ? "UPDATE concerns SET title = ?, messages = ? WHERE id = ?" : "UPDATE concerns SET messages = ? WHERE id = ?";
-                    req.db.query(query, title ? [
-                        title,
-                        JSON.stringify(chat),
-                        chatId
-                    ] : [
+                    const query = "UPDATE concerns SET messages = ? WHERE id = ?";
+                    req.db.query(query, [
                         JSON.stringify(chat),
                         chatId
                     ]);
 
-                    return res.status(200).json(title ? { success: true, title: title, chat: chat } : { success: true, chat: chat });
+                    return res.status(200).json({ success: true, chat: chat });
                 } catch(err) {
                     console.log(err);
                     return res.status(500).json({ error: "Internal server error" });
