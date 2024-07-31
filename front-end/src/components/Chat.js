@@ -220,19 +220,20 @@ const Chat = ({ Chat, LoadChats }) => {
             </div>
 
             <div className="row justify-content-center">
-                <div className="col" style={{ maxWidth: "800px" }}>
-                    <div className="input-group mb-3 px-3">
-                    <textarea
-                        ref={inputRef}
-                        className="form-control bg-body-tertiary border-0 no-focus-highlight"
-                        placeholder="Write your concern"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        rows={1}
-                        style={{ overflowY: 'hidden', resize: 'none' }}>
-                    </textarea>
-                        <div title="Send" className="align-content-center bg-body-tertiary rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
+                <div className="container col p-0 text-center mb-2" style={{ maxWidth: "800px" }}>
+                    <div className="input-group bg-body-tertiary p-2" style={{ borderRadius: "26px" }}>
+                        <textarea
+                            ref={inputRef}
+                            className="form-control bg-transparent border-0 no-focus-highlight"
+                            placeholder="Write your concern"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            rows={1}
+                            style={{ overflowY: 'hidden', resize: 'none' }}>
+                        </textarea>
+
+                        <div title="Send" className="align-content-center rounded-end" style={{minHeight: "100%", minWidth: "36px"}}>
                             <div className="input-group-append" style={{width: "30px", height: "30px"}}>
                                 <button className="btn btn-dark border-0 p-0 w-100 h-100" style={{borderRadius: "50%", transform: "translateX(2px)"}} onClick={handleSend}>
                                     <svg width="20" height="20" fill="currentColor" style={{transform: "translateY(-2px)"}} viewBox="0 0 16 16">
@@ -242,6 +243,8 @@ const Chat = ({ Chat, LoadChats }) => {
                             </div>
                         </div>
                     </div>
+
+                    <span className="text-body-tertiary" style={{fontSize: "14px"}}>AI can make mistakes. Check important info.</span>
                 </div>
             </div>
         </div>
