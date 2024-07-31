@@ -43,7 +43,7 @@ const InitComponent = ({ user, onRegisterGuest }) => {
                 setLoadingChat(false);
 
                 response.data.concern.messages = JSON.parse(response.data.concern.messages);
-                response.data.concern.title = JSON.parse(response.data.concern.title);
+                response.data.concern.title = response.data.concern.title;
 
                 setChat(response.data.concern);
             } catch(error) {
