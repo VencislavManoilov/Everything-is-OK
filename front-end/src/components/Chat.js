@@ -13,7 +13,7 @@ const Chat = ({ Chat, LoadChats }) => {
     const [chat, setChat] = useState(Chat || { title: "", messages: [] });
     const [loadingMsg, setLoadingMsg] = useState(false);
     const [loadingTitle, setLoadingTitle] = useState(false);
-
+    const [sidebar, setSidebar] = useState(true);
 
     useEffect(() => {
         if(Chat) {
@@ -30,6 +30,29 @@ const Chat = ({ Chat, LoadChats }) => {
             setTitle();
         }
     }, [chat]);
+
+    const [sidebarVisibility, setSidebarVisibility] = useState("");
+
+    useEffect(() => {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) {
+            setSidebarVisibility(sidebar.style.visibility);
+
+            const observer = new MutationObserver(() => {
+                setSidebarVisibility(sidebar.style.visibility);
+            });
+
+            observer.observe(sidebar, { attributes: true, attributeFilter: ['style'] });
+
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        setSidebar(sidebarVisibility === "visible" ? true : false);
+    }, [sidebarVisibility]);
 
     const handleSend = async () => {
         if(loadingMsg) {
@@ -167,7 +190,7 @@ const Chat = ({ Chat, LoadChats }) => {
     }, [document.getElementById("messages")?.offsetHeight]);
 
     return (
-        <div className="w-100 container h-100 d-flex flex-column" style={{ padding: "0", minWidth: "calc(100% - 250px)" }}>
+        <div className="w-100 z-0 container h-100 d-flex flex-column m-0 smooth" style={{ padding: "0", minWidth: (sidebar ? "calc(100% - 250px)" : "100%")}}>
             {error &&
                 <div className="alert alert-danger alert-dismissible">
                     <div dangerouslySetInnerHTML={{ __html: error }}></div>
@@ -175,48 +198,50 @@ const Chat = ({ Chat, LoadChats }) => {
                 </div>
             }
 
-            <div className="text-center pt-5 pb-2 px-2">
-                {!loadingTitle ? (
-                    <h3>{(chat && chat.title) ? chat.title : ""}</h3>
-                ) : (
-                    <div className="row justify-content-center">
-                        <p className="col-auto h3">New Chat </p>
-                        <div className="col-auto spinner-border text-center" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            <div id="chat" className="flex-grow-1 w-100 px-3" style={{ overflowY: {chatOverflow}, overflowX: "hidden" }}>
-                <div className="row justify-content-center">
-                    <div id="messages" className="col" style={{ maxWidth: "800px" }}>
-                        {chat?.messages.length > 0 ? (
-                            chat.messages.map((msg, index) => (
-                                msg.role !== 'system' && (
-                                    <div key={index} className={`mb-3 ${msg.role === 'user' ? 'text-end' : 'text-start'}`}>
-                                        <div className={`d-inline-block p-2 ${msg.role === 'user' ? 'bg-secondary text-white text-start' : 'text-light'}`} style={{ borderRadius: '10px', whiteSpace: 'pre-wrap', maxWidth: (msg.role === "user" ? "60%" : "none") }}>
-                                            {msg.content}
-                                        </div>
-                                    </div>
-                                )
-                            ))
-                        ) : (
-                            <div className="text-center mt-5">
-                                <h3 className="mb-3">Welcome!</h3>
-                                <p>Feeling uneasy about something in the world? You're not alone. Share your concerns here, and we'll help you understand why it's not as scary as it seems.</p>
-                                <p className="text-muted">Together, we can find calm in the midst of uncertainty.</p>
-                            </div>
-                        )}
-
-                        <div className="row w-100 text-center" style={{ display: (loadingMsg ? "block" : "none") }}>
-                            <div className="spinner-border mx-auto" role="status">
+            <div className="flex-grow-1 justify-content-center" style={{ overflowY: {chatOverflow}, overflowX: "hidden" }}>
+                <div className="text-center sticky-top bg-body pt-5 pb-1 px-2">
+                    {!loadingTitle ? (
+                        <h3>{(chat && chat.title) ? chat.title : ""}</h3>
+                    ) : (
+                        <div className="row justify-content-center">
+                            <p className="col-auto h3">New Chat </p>
+                            <div className="col-auto spinner-border text-center" role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
-                <div ref={messagesEndRef}></div>
+
+                <div id="chat" className="w-100 px-3 pt-1">
+                    <div className="row justify-content-center">
+                        <div id="messages" className="col" style={{ maxWidth: "800px" }}>
+                            {chat?.messages.length > 0 ? (
+                                chat.messages.map((msg, index) => (
+                                    msg.role !== 'system' && (
+                                        <div key={index} className={`mb-3 ${msg.role === 'user' ? 'text-end' : 'text-start'}`}>
+                                            <div className={`d-inline-block p-2 ${msg.role === 'user' ? 'bg-secondary text-white text-start' : 'text-light'}`} style={{ borderRadius: '10px', whiteSpace: 'pre-wrap', maxWidth: (msg.role === "user" ? "60%" : "none") }}>
+                                                {msg.content}
+                                            </div>
+                                        </div>
+                                    )
+                                ))
+                            ) : (
+                                <div className="text-center mt-5">
+                                    <h3 className="mb-3">Welcome!</h3>
+                                    <p>Feeling uneasy about something in the world? You're not alone. Share your concerns here, and we'll help you understand why it's not as scary as it seems.</p>
+                                    <p className="text-muted">Together, we can find calm in the midst of uncertainty.</p>
+                                </div>
+                            )}
+
+                            <div className="row w-100 text-center" style={{ display: (loadingMsg ? "block" : "none") }}>
+                                <div className="spinner-border mx-auto" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={messagesEndRef}></div>
+                </div>
             </div>
 
             <div className="row justify-content-center">

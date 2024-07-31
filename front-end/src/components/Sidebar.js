@@ -63,10 +63,10 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
     }
 
     return (
-        <div className="d-flex flex-column bg-dark-subtle text-light vh-auto smooth" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
-            <div className={`row m-0 smooth justify-content-between align-items-center`} style={{width: visible == "visible" ? "250px" : "82px", visibility: "visible"}}>
+        <div id="sidebar" className="d-flex flex-column bg-dark-subtle text-light vh-auto smooth" style={{ width: (visible == "visible") ? "250px" : "0px", visibility: visible }}>
+            <div className={`row m-0 smooth justify-content-between align-items-center`} style={{width: visible == "visible" ? "250px" : "82px", visibility: "visible", zIndex: "1000"}}>
                 <div title={visible == "visible" ? "Hide Sidebar" : "Show Sidebar"} className="p-0 align-content-center text-center" style={{width: "41px", height: "41px"}}>
-                    <button className="btn btn-sidebar p-0 m-0 col-auto border-0 no-highlight smooth" style={{width: "35px", height: "35px"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
+                    <button className="btn btn-sidebar p-0 m-0 col-auto border-0 no-highlight smooth" style={{width: "35px", height: "35px", position: "relative", zIndex: "1000"}} onClick={() => setVisible(visible == "hidden" ? "visible" : "hidden")}>
                         <svg width="25px" height="25px" style={{transform: "translateY(-1px)"}} fill="currentColor" viewBox="0 0 16 16">
                             <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
                             <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h4v8H2a1 1 0 0 1-1-1m5 1V6h9v7a1 1 0 0 1-1 1z"/>
@@ -84,23 +84,26 @@ const Sidebar = ({ concerns, changeChatId, usingId, loading }) => {
                 </div>
             </div>
 
-            <div className="flex-grow-1 overflow-x-hidden pb-2 ps-4 pe-2 p-0" style={{overflow: (visible == "visible") ? "auto" : "hidden"}}>
-                <div className="h5 mt-2">History</div>
-                {!loading ? 
-                    ((concerns && concerns.length != 0) ? (
-                        (concerns.map(concern => (
-                            <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
-                        )))
-                    )
-                    : (<p className="text-center text-body-tertiary p-0 m-0" style={{width: "202px"}}>No concerns</p>)
-                    ) : (
-                        <div className="w-100 text-center">
-                            <div className="spinner-border text-center mx-auto" role="status">
-                                <span className="visually-hidden">Loading...</span>
+
+            <div className="flex-grow-1 overflow-x-hidden p-0" style={{overflow: (visible == "visible") ? "auto" : "hidden"}}>
+                <div className="h5 p-3 pb-2 m-0 sticky-top bg-dark-subtle">History</div>
+                <div className="pb-2 ps-4 mt-0 pe-2">
+                    {!loading ? 
+                        ((concerns && concerns.length != 0) ? (
+                            (concerns.map(concern => (
+                                <Concern key={concern.id} concern={concern} changeChatId={changeChatId} usingId={usingId} setId={setId} />
+                            )))
+                        )
+                        : (<p className="text-center text-body-tertiary p-0 m-0" style={{width: "202px"}}>No concerns</p>)
+                        ) : (
+                            <div className="w-100 text-center">
+                                <div className="spinner-border text-center mx-auto" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
                             </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
+                </div>
             </div>
 
             <div className="modal fade" id="delete" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
