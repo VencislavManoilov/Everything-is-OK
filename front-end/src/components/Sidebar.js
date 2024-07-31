@@ -10,8 +10,8 @@ const Concern = ({ concern, changeChatId, usingId, setId }) => {
 
     return (
         <div className="row" style={{width: "220px"}}>
-            <button onClick={() => {openConcern()}} className={`btn ${usingId === concern.id ? "btn-secondary" : "btn-dark"} col-10 bg-opacity-50 overflow-hidden text-start text-truncate my-2`}>
-                {concern.title ? concern.title.substring(1, concern.title.length-1) : "New Chat"}
+            <button title={concern.title} onClick={() => {openConcern()}} className={`btn ${usingId === concern.id ? "btn-secondary" : "btn-dark"} col-10 bg-opacity-50 overflow-hidden text-start text-truncate my-2`}>
+                {concern.title ? concern.title : "New Chat"}
             </button>
             <div title="Delete" className="col-2 mt-2 p-0 align-content-center text-center" style={{height: "36px"}}>
                 <button className="btn border-0 p-0 smooth btn-sidebar rounded-circle" style={{width: "30px", height: "30px", transform: "translateY(2px)"}} onClick={() => {setId(concern.id)}} data-bs-toggle="modal" data-bs-target="#delete">
