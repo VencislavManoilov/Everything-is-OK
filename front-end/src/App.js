@@ -4,7 +4,6 @@ import axios from "axios";
 import InitComponent from "./components/InitComponent";
 import FAQ from "./components/FAQ";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
@@ -65,7 +64,6 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/profile" element={<Profile user={user} />} />
                 </Routes>
-                {/* <Footer /> */}
             </Router>
         ) : (
             <Error />
