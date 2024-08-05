@@ -39,12 +39,12 @@ You can visit it on [devman.site](http://devman.site)
     serve -s build
    ```
 ### Using Docker
-1. **In the root directory, run:
+1. In the root directory, run:
    ```sh
    docker-compose build
    docker-compose up
    ```
-2. Access the site at 'localhost:3000'.
+2. Access the site at `localhost:3000`
 
 ## Usage
 * Guest Access: Continue as a guest without an account.
