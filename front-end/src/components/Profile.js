@@ -66,6 +66,7 @@ const Profile = ({ user }) => {
             <div className="row justify-content-center align-items-center" style={{height: "30px"}}>
                 <p className="h6 col-auto m-0 p-0 me-2">Made by Vencislav Manoilov 2024<span className="text-start align-text-top" style={{fontSize: "13px"}}>©</span></p>
                 <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("https://github.com/VencislavManoilov")}} src="https://img.shields.io/badge/-Github-black?style=flat&logo=github&logoColor=white&link=https://github.com/VencislavManoilov" />
+                <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("https://www.linkedin.com/in/ventsislav-manoilov-a82210272/")}} src="https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white" />
             </div>
 
             <div className="modal fade" id="modalRegister" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
