@@ -67,6 +67,8 @@ const Profile = ({ user }) => {
                 <p className="h6 col-auto m-0 p-0 me-2">Made by Vencislav Manoilov 2024<span className="text-start align-text-top" style={{fontSize: "13px"}}>©</span></p>
                 <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("https://github.com/VencislavManoilov")}} src="https://img.shields.io/badge/-Github-black?style=flat&logo=github&logoColor=white&link=https://github.com/VencislavManoilov" />
                 <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("https://www.linkedin.com/in/ventsislav-manoilov-a82210272/")}} src="https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white" />
+                <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("https://x.com/venci71694746")}} src="https://img.shields.io/badge/-Venci-black?style=flat&logo=X&logoColor=whitelink=https://x.com/venci71694746" />
+                <img type="button" className="btn col-auto m-0 p-0" onClick={() => {window.open("mailto:vencislav2.manoilov@gmail.com")}} src="https://img.shields.io/badge/-Gmail-white?style=flat&logo=gmail&logoColor=whitelink=mailto:vencislav2.manoilov@gmail.com" />
             </div>
 
             <div className="modal fade" id="modalRegister" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
