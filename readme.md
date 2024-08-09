@@ -47,8 +47,8 @@ You can visit it on [devman.site](http://devman.site)
 2. Access the site at `localhost:3000`
 
 ## Usage
-* Guest Access: Continue as a guest without an account.
-* Account Access: Register or log in to save and view chat history and manage your profile.
+* **Guest Access**: Continue as a guest without an account.
+* **Account Access**: Register or log in to save and view chat history and manage your profile.
 
 ## Contributing
 Contributions are currently not being accepted.
