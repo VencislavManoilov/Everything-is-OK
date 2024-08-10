@@ -1,4 +1,6 @@
-# Everything is OK
+<h1 align="center">
+Everything is OK
+</h1>
 
 ## Overview
 "Everything is OK" is a chat-based website designed to calm people's worries or assist them with various tasks using AI. The project idea originated from a ChatGPT suggestion during a moment of boredom.
