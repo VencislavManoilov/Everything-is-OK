@@ -3,8 +3,10 @@ Everything is OK
 </h1>
 
 ## Overview
-"Everything is OK" is a chat-based website designed to calm people's worries or assist them with various tasks using AI. The project idea originated from a ChatGPT suggestion during a moment of boredom.
-You can visit it on [devman.site](http://devman.site)
+<p align="center">
+  "Everything is OK" is a chat-based website designed to calm people's worries or assist them with various tasks using AI. The project idea originated from a ChatGPT suggestion during a moment of boredom.
+  You can visit it on <a href="http://devman.site">devman.site</a>
+</p>
 
 ## Features
 - **Account Management**: Create an account or continue as a guest.
