@@ -61,4 +61,4 @@ Contributions are currently not being accepted.
 This project does not have a license at the moment.
 
 ## Contact
-For questions or feedback, contact: [vencislav2.manoilov@gmail.com](mailto:vencislav2.manoilov@gmail.com)
+For questions or feedback, contact: [vencislav@manoilov.email](mailto:vencislav@manoilov.email)
