@@ -32,7 +32,7 @@ Everything is OK
    ```sh
    cd back-end
    npm install
-   npm start
+   node server.tample.js
    ```
 3. **Frontend**:
    ```sh
