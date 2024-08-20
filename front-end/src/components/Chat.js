@@ -244,7 +244,7 @@ const Chat = ({ Chat, LoadChats }) => {
                 </div>
             </div>
 
-            <div className="row justify-content-center">
+            <div className="row mx-3 justify-content-center">
                 <div className="container col p-0 text-center mb-2" style={{ maxWidth: "800px" }}>
                     <div className="input-group bg-body-tertiary p-2" style={{ borderRadius: "26px" }}>
                         <textarea
